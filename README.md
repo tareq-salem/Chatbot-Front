@@ -1,3 +1,7 @@
+# HOC - Chatbot
+
+Use the HOC - Chatbot to buy geek goodies.  
+
 ## Development
 
 This was bootstrapped using the *Create React App* boilerplate.
@@ -5,12 +9,6 @@ This was bootstrapped using the *Create React App* boilerplate.
 ### Start development
 
 `npm start`
-
-### Build production files
-
-1. Edit your homepage URL in `package.json`.
-2. Run the following command in the project folder
-`npm run build`
 
 ### Etc
 
