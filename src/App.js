@@ -18,28 +18,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="Header">
-          <img src={logo} className="Header-logo" alt="logo" />
-        </header>
-        <div className="container content">
-          <div className="row justify-content-md-center">
-            <div className="col">
-              <ThemeProvider theme={chat_styles}>
-                <ChatBot
-                  steps={steps}
-                  headerTitle="HOC - Chatbot"
-                  placeholder="Type away..."
-                  customDelay="500"
-                  botAvatar={logo_chatbot}
-                  userAvatar={icon_user}
-                />
-              </ThemeProvider>
-            </div>
-          </div>
-        </div>
-        <footer className="Footer">
-          <p className="credit">Shoutout to <a href="https://lucasbassetti.com.br/react-simple-chatbot/" className="chatbot"><img src={logo_chatbot} alt="React Simple Chatbot" /></a>.</p>
-        </footer>
+          <ThemeProvider theme={chat_styles}>
+            <ChatBot
+              steps={steps}
+              headerTitle="HOC - Chatbot"
+              placeholder="Type away..."
+              customDelay="500"
+              botAvatar={logo_chatbot}
+              userAvatar={icon_user}
+            />
+          </ThemeProvider>
       </div>
     );
   }
