@@ -1,8 +1,8 @@
 const steps = [
   {
     id: '1',
-    message: 'What is your name?',
-    trigger: '2',
+    message: 'Bienvenue sur la boutique Geek Goodies',
+    trigger: 2,
   },
   {
     id: '2',
