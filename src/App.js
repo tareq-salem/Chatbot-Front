@@ -34,6 +34,12 @@ class App extends Component {
                   userAvatar={icon_user}
                 />
               </ThemeProvider>
+              <iframe
+                allow="microphone;"
+                width="350"
+                height="430"
+                src="https://console.dialogflow.com/api-client/demo/embedded/ff3b5b69-84fe-48b2-9d5e-781b86eeabc3">
+              </iframe>
             </div>
           </div>
         </div>
