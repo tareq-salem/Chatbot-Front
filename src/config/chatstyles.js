@@ -3,7 +3,7 @@ const chat_styles = {
   fontFamily: 'Helvetica Neue',
   headerBgColor: '#CC2029',
   headerFontColor: '#fff',
-  headerFontFamily: 'Montseratt',
+  headerFontFamily: 'Montserrat',
   botBubbleColor: '#CC2029',
   botFontColor: '#fff',
   userBubbleColor: '#fff',
