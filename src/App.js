@@ -12,6 +12,8 @@ import icon_user from './assets/images/avatar.png';
 import './assets/css/main.css';
 import './assets/css/bootstrap-grid.min.css';
 
+import './modal-register/modal-register';
+
 import chat_styles from './config/chatstyles'
 
 class App extends Component {
