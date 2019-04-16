@@ -1,43 +1,105 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ChatBot, { Loading } from 'react-simple-chatbot';
+import Axios from 'axios';
 
-import ChatBot from 'react-simple-chatbot';
-import { ThemeProvider } from 'styled-components';
+class BotResponse extends Component {
+  constructor(props) {
+    super(props);
 
-import steps from './config/steps';
+    this.state = { 
+      loading: true,
+      result: '',
+      trigger: false,
+    };
 
-import './App.css';
-import logo_chatbot from './assets/images/react-simple-chatbot.svg';
-import icon_user from './assets/images/avatar.png';
-import './assets/css/main.css';
-import './assets/css/bootstrap-grid.min.css';
+    this.triggetNext = this.triggetNext.bind(this);
+  }
 
-import './modal-register/modal-register';
+  getResponseBot(search) {
+      return Axios.post('http://localhost:8000/botman', { message: search });
+  }
 
-import chat_styles from './config/chatstyles'
+  componentWillMount() {
+    // const self = this;
+    const { steps } = this.props;
+    this.setState({ loading: true });
+    const search = steps.search.value;
+    console.log(search);
+    this.getResponseBot(search)
+        .then(res => {
+            this.response = res.data.response.queryResult.fulfillmentText
+            this.triggetNext(this.response);
+        });
+  }
 
-class App extends Component {
+  triggetNext(botResponse) {
+    this.setState({ trigger: true, response: botResponse, loading: false }, () => {
+      console.log(this.state.response)
+      this.props.triggerNextStep();
+    });
+  }
+
   render() {
+    const { loading, result, trigger } = this.state;
+    console.log('render res ', result )
     return (
-      <div className="App">
-        <ThemeProvider theme={chat_styles}>
-          <ChatBot
-            steps={steps}
-            headerTitle="HOC - Chatbot"
-            placeholder="Type away..."
-            customDelay="500"
-            botAvatar={logo_chatbot}
-            userAvatar={icon_user}
-          />
-        </ThemeProvider>
-        <iframe
-          allow="microphone;"
-          width="350"
-          height="430"
-          src="https://console.dialogflow.com/api-client/demo/embedded/ff3b5b69-84fe-48b2-9d5e-781b86eeabc3">
-        </iframe>
+        <div>
+        { loading ? <Loading /> : result }
+        {
+          !loading &&
+          <div
+            style={{
+              textAlign: 'center',
+              marginTop: 20,
+            }}
+          >
+            {
+              !trigger &&
+              <button
+                onClick={() => this.triggetNext()}
+              >
+                Search Again
+              </button>
+            }
+          </div>
+        }
       </div>
     );
   }
 }
 
-export default App;
+BotResponse.propTypes = {
+  steps: PropTypes.object,
+  triggerNextStep: PropTypes.func,
+};
+
+BotResponse.defaultProps = {
+  steps: undefined,
+  triggerNextStep: undefined,
+};
+
+const GeekBot = () => (
+  <ChatBot
+    steps={[
+      {
+        id: '1',
+        message: 'Hello my name is Geekbot, what can I do for you ?',
+        trigger: 'search'
+      },
+      {
+        id: 'search',
+        user: true,
+        trigger: '2',
+      },
+      {
+        id: '2',
+        component: <BotResponse />,
+        waitAction: true,
+        trigger: 'search',
+      },
+    ]}
+  />
+);
+
+export default GeekBot;
